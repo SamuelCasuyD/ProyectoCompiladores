@@ -1,0 +1,3 @@
+for {set x 0} {$x < $c} {incr i} {
+	puts "El valor de x es $x"
+}

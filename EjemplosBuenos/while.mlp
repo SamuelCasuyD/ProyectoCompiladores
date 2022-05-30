@@ -1,0 +1,4 @@
+while {x < 5} {
+PutS "x es x"
+Set x [expr {x + 1}]
+}

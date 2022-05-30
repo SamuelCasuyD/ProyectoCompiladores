@@ -1,0 +1,1 @@
+if {$X == 2}else {PutS "$x no es 2"}

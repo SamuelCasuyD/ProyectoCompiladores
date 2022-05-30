@@ -1,0 +1,5 @@
+Int Main () {
+    int a=1;
+ int b=2;
+    cout<<"ingrese un numero: ";cin>>a;
+}

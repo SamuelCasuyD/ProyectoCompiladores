@@ -1,0 +1,4 @@
+while {x < 5} {
+puts "x es x"
+set x [expr {x + 1}]
+}

@@ -1,0 +1,8 @@
+int main () {
+    int a=1;
+    int b=2;
+    int c;
+    cout<<"ingrese un numero ";cin>>a;
+    cout<<"ingrese un numero ";cin>>b;
+	a+b=c;
+}

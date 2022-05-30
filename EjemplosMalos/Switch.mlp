@@ -1,0 +1,21 @@
+switch $x {
+"$z" {
+Set y1 [expr2 {$y + 1} ]
+PutS "COINCIDE UNO $y + uno  $y1"
+}
+ONE {
+Set y1 [expr {$y+1}]
+PutS "COINCIDE UNO $y + uno es $y1"
+}
+TWO {
+Set y1 [expr {$y+2}]
+PutS "COINCIDE DOS $y + dos es $y1"
+}
+THREE {
+set y1 [expr {$y+3}]
+PutS "COINCIDE TRES $y + tres es $y1"
+}
+default {
+Puts "$x no tiene COINCIDENCIA"
+}
+}
