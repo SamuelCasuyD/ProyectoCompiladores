@@ -1,0 +1,217 @@
+package proyectocompiladores;
+import java_cup.runtime.Symbol;
+
+parser code
+{:
+    private Symbol s;
+    
+    public void syntax_error(Symbol s){
+        this.s = s;
+    }
+
+    public Symbol getS(){
+        return this.s;
+    }
+:};
+
+terminal 
+    Comillas, 
+    TipoDeDatos, 
+    Int, 
+    Cadena, 
+    If, 
+    Else, 
+    Do, 
+    While, 
+    For, 
+    SwitchCase, 
+    PalabraReservada, 
+    Igual, 
+    Defecto,
+    OperadoresAritmeticos, 
+    OperadoresLogicos, 
+    OperadoresRelacionales, 
+    Estructura, 
+    OperadoresDeCadenas,
+    OperadoresAtribucion, 
+    OperadoresMasMenos, 
+    OperadoresBooleano, 
+    ParentesisApertura, 
+    ParentesisCierre,
+    LlaveApertura, 
+    LlaveCierre, 
+    CorcheteApertura, 
+    CorcheteCierre, 
+    Main, 
+    PuntoComa, 
+    Identificador, 
+    Exponente,
+    Numero, 
+    Dolar, 
+    ERROR
+;
+
+non terminal 
+    INICIO, 
+    SENTENCIA, 
+    IF, 
+    WHILE, 
+    MAIN, 
+    ELSE,
+    DECLARACION,
+    VARIABLES,
+    SWITCH,
+    FOR,
+    EXPRESIONES
+;
+
+start with INICIO;
+
+INICIO ::=
+    SENTENCIA ParentesisApertura ParentesisCierre | 
+    SENTENCIA |
+    Int MAIN |
+    DECLARACION |
+    EXPRESIONES |
+VARIABLES
+;
+
+SENTENCIA ::=
+    IF |
+    WHILE |
+    ELSE |
+    FOR |
+    SWITCH
+;
+
+IF ::= 
+    If |
+    If LlaveApertura Dolar Identificador OperadoresRelacionales Numero LlaveCierre ELSE |
+    If LlaveApertura Dolar Identificador OperadoresRelacionales Numero LlaveCierre 
+    LlaveApertura 
+        OperadoresLogicos Identificador Identificador Identificador FOR SWITCH
+    LlaveCierre
+;
+
+WHILE ::= 
+While LlaveApertura Identificador OperadoresRelacionales Numero LlaveCierre LlaveApertura 
+    PalabraReservada Comillas Identificador Identificador Identificador Comillas
+    PalabraReservada Identificador 
+        CorcheteApertura 
+            PalabraReservada 
+            LlaveApertura 
+                Identificador  OperadoresAritmeticos Numero
+            LlaveCierre 
+        CorcheteCierre
+LlaveCierre 
+;
+
+MAIN ::=
+    Main ParentesisApertura ParentesisCierre LlaveApertura
+        Int Identificador Igual Numero PuntoComa
+        Int Identificador Igual Numero PuntoComa
+        Int Identificador PuntoComa
+        Identificador OperadoresRelacionales OperadoresRelacionales Comillas Identificador Identificador Identificador Comillas PuntoComa Identificador OperadoresRelacionales OperadoresRelacionales Identificador PuntoComa
+        Identificador OperadoresRelacionales OperadoresRelacionales Comillas Identificador Identificador Identificador Comillas PuntoComa Identificador OperadoresRelacionales OperadoresRelacionales Identificador PuntoComa
+        Identificador OperadoresAritmeticos Identificador Igual Identificador PuntoComa
+    LlaveCierre
+;
+
+ELSE ::=
+    Else LlaveApertura PalabraReservada Comillas Dolar Identificador Identificador Identificador Numero Comillas LlaveCierre
+;
+
+
+DECLARACION ::=
+    PalabraReservada Identificador CorcheteApertura PalabraReservada Dolar Identificador OperadoresAritmeticos Dolar Identificador CorcheteCierre |
+    LlaveApertura 
+        Numero OperadoresAritmeticos
+        ParentesisApertura Numero OperadoresAritmeticos Numero ParentesisCierre
+        LlaveApertura Numero OperadoresAritmeticos Numero LlaveCierre
+        CorcheteApertura Numero OperadoresAritmeticos Numero CorcheteCierre
+    LlaveCierre Exponente Numero |
+    OperadoresLogicos Identificador Identificador Identificador VARIABLES IF
+;
+
+VARIABLES ::=
+    PalabraReservada Identificador Numero 
+    PalabraReservada Identificador Numero 
+    PalabraReservada Identificador CorcheteApertura PalabraReservada Dolar Identificador OperadoresAritmeticos Dolar Identificador CorcheteCierre    
+    OperadoresLogicos Identificador Identificador Identificador |
+    PalabraReservada Identificador Identificador PalabraReservada Identificador Identificador PalabraReservada Identificador Identificador |
+    PalabraReservada Identificador Numero
+
+;
+
+SWITCH ::=
+    SwitchCase Dolar Identificador LlaveApertura 
+        Comillas Dolar Identificador Comillas LlaveApertura
+            PalabraReservada Identificador CorcheteApertura PalabraReservada LlaveApertura Dolar Identificador OperadoresAritmeticos Numero LlaveCierre CorcheteCierre
+            PalabraReservada Comillas Identificador Identificador Dolar Identificador  OperadoresAritmeticos Identificador Dolar Identificador Comillas
+        LlaveCierre
+
+        Identificador LlaveApertura
+            PalabraReservada Identificador CorcheteApertura PalabraReservada LlaveApertura Dolar Identificador OperadoresAritmeticos Numero LlaveCierre CorcheteCierre
+            PalabraReservada Comillas Identificador Identificador Dolar Identificador  OperadoresAritmeticos Identificador Identificador Dolar Identificador Comillas
+        LlaveCierre
+         
+        Identificador LlaveApertura
+            PalabraReservada Identificador CorcheteApertura PalabraReservada LlaveApertura Dolar Identificador OperadoresAritmeticos Numero LlaveCierre CorcheteCierre
+            PalabraReservada Comillas Identificador Identificador Dolar Identificador OperadoresAritmeticos Identificador Identificador Dolar Identificador Comillas
+        LlaveCierre
+        
+        Identificador LlaveApertura
+            PalabraReservada Identificador CorcheteApertura PalabraReservada LlaveApertura Dolar Identificador OperadoresAritmeticos Numero LlaveCierre CorcheteCierre
+            PalabraReservada Comillas Identificador Identificador Dolar Identificador OperadoresAritmeticos Identificador Identificador Dolar Identificador Comillas
+        LlaveCierre
+
+        Defecto LlaveApertura            
+            PalabraReservada Comillas Dolar Identificador Identificador Identificador Identificador Comillas
+        LlaveCierre
+    LlaveCierre |
+    OperadoresLogicos Identificador Identificador Identificador 
+    SwitchCase Identificador LlaveApertura
+        Comillas Numero Comillas LlaveApertura 
+            PalabraReservada Comillas Identificador Comillas
+        LlaveCierre
+
+        Comillas Numero Comillas LlaveApertura 
+            PalabraReservada Comillas Identificador Comillas
+        LlaveCierre
+
+        Comillas Numero Comillas LlaveApertura 
+            PalabraReservada Comillas Identificador Comillas
+        LlaveCierre
+         Defecto  LlaveApertura 
+            PalabraReservada Comillas Identificador Identificador Identificador Identificador Identificador Identificador Comillas
+        LlaveCierre            
+    LlaveCierre
+;
+
+FOR ::=
+    For LlaveApertura
+        PalabraReservada Identificador Numero
+    LlaveCierre
+    LlaveApertura
+        Dolar Identificador OperadoresRelacionales Dolar Identificador
+    LlaveCierre
+    LlaveApertura
+        PalabraReservada Identificador
+    LlaveCierre
+    LlaveApertura
+        PalabraReservada Comillas Identificador Identificador Identificador Identificador Identificador Dolar Identificador Comillas
+    LlaveCierre |
+    
+    For ParentesisApertura
+        Identificador Igual Numero PuntoComa
+        Identificador OperadoresRelacionales Numero PuntoComa
+        Identificador OperadoresAritmeticos OperadoresAritmeticos 
+    ParentesisCierre
+LlaveApertura
+    Identificador Igual Identificador OperadoresAritmeticos Identificador PuntoComa
+LlaveCierre
+
+;
+EXPRESIONES ::=
+
+;
